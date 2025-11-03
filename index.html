@@ -962,50 +962,52 @@
   </footer>
 
   <script>
-    // Mobile Menu and Dropdown functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu toggle
+    // Mobile Menu - Simple and Direct
+    (function() {
       const menuBtn = document.getElementById('mobileMenuBtn');
       const navMenu = document.getElementById('navMenu');
       
-      const setMenuState = (open) => {
-        if (!menuBtn || !navMenu) return;
-        menuBtn.classList.toggle('active', open);
-        navMenu.classList.toggle('active', open);
-        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        navMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-      };
-
-      const toggleMenu = () => {
-        const isOpen = navMenu?.classList.contains('active');
-        setMenuState(!isOpen);
-      };
-
-      const closeMenu = () => setMenuState(false);
-
       if (menuBtn && navMenu) {
-        menuBtn.addEventListener('click', function(e) {
+        menuBtn.onclick = function(e) {
           e.preventDefault();
           e.stopPropagation();
-          toggleMenu();
+          menuBtn.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        };
+      }
+    })();
+  </script>
+
+
+  <script>
+    // Mobile Menu and Dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+      
+      if (mobileMenuToggle && navMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+          mobileMenuToggle.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.header-main')) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+          }
+        });
+        
+        // Close mobile menu when window is resized to desktop
+        window.addEventListener('resize', function() {
+          if (window.innerWidth >= 768) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+          }
         });
       }
-
-      document.addEventListener('click', function(e) {
-        if (!menuBtn || !navMenu) return;
-        if (!e.target.closest('.header-main')) {
-          closeMenu();
-        }
-      });
-
-      window.addEventListener('resize', function() {
-        if (!menuBtn || !navMenu) return;
-        if (window.innerWidth >= 768) {
-          closeMenu();
-        }
-      });
-      
-  setMenuState(navMenu && navMenu.classList.contains('active'));
       
       // Dropdown functionality
       const dropdowns = document.querySelectorAll('.dropdown');
@@ -1039,13 +1041,14 @@
       // Handle dropdown items click
       const dropdownItems = document.querySelectorAll('.dropdown-item');
       dropdownItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          // Close dropdown after selection
+        item.addEventListener('click', function() {
           const dropdown = this.closest('.dropdown');
           dropdown.classList.remove('active');
           
-          // Also close mobile menu if open
-          closeMenu();
+          if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+          }
         });
       });
 
@@ -1074,7 +1077,7 @@
 
       // Auto-hide header on scroll down, show on scroll up
       let lastScrollTop = 0;
-      let scrollThreshold = 100; // Start hiding after scrolling 100px
+      let scrollThreshold = 100;
       const header = document.querySelector('header');
       
       window.addEventListener('scroll', function() {
@@ -1082,14 +1085,11 @@
         
         if (scrollTop > scrollThreshold) {
           if (scrollTop > lastScrollTop) {
-            // Scrolling down
             header.classList.add('header-hidden');
           } else {
-            // Scrolling up
             header.classList.remove('header-hidden');
           }
         } else {
-          // At the top of the page, always show header
           header.classList.remove('header-hidden');
         }
         
