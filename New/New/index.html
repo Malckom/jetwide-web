@@ -893,33 +893,20 @@
       const menuBtn = document.getElementById('mobileMenuBtn');
       const navMenu = document.getElementById('navMenu');
       
-      console.log('Menu button:', menuBtn);
-      console.log('Nav menu:', navMenu);
-      
       if (menuBtn && navMenu) {
-        // Click handler
+        // Single click handler works for both desktop and mobile
         menuBtn.onclick = function(e) {
           e.preventDefault();
           e.stopPropagation();
-          console.log('Button clicked!');
           menuBtn.classList.toggle('active');
           navMenu.classList.toggle('active');
-          console.log('Menu active:', navMenu.classList.contains('active'));
         };
-        
-        // Touch handler for mobile
-        menuBtn.addEventListener('touchend', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('Button touched!');
-          menuBtn.classList.toggle('active');
-          navMenu.classList.toggle('active');
-        });
-      } else {
-        console.error('Menu button or nav not found!');
       }
     })();
-    
+  </script>
+
+
+  <script>
     // Mobile Menu and Dropdown functionality
     document.addEventListener('DOMContentLoaded', function() {
       // Mobile menu toggle
@@ -927,23 +914,10 @@
       const navMenu = document.querySelector('.nav-menu');
       
       if (mobileMenuToggle && navMenu) {
-        // Add both click and touch events for better mobile support
-        mobileMenuToggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('Mobile menu clicked'); // Debug log
+        mobileMenuToggle.addEventListener('click', function() {
           mobileMenuToggle.classList.toggle('active');
           navMenu.classList.toggle('active');
         });
-        
-        // Add touch event for mobile devices
-        mobileMenuToggle.addEventListener('touchstart', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('Mobile menu touched'); // Debug log
-          mobileMenuToggle.classList.toggle('active');
-          navMenu.classList.toggle('active');
-        }, { passive: false });
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {

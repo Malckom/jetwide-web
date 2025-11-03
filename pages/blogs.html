@@ -352,21 +352,13 @@
       const navMenu = document.getElementById('navMenu');
       
       if (menuBtn && navMenu) {
-        // Click handler
+        // Single click handler works for both desktop and mobile
         menuBtn.onclick = function(e) {
           e.preventDefault();
           e.stopPropagation();
           menuBtn.classList.toggle('active');
           navMenu.classList.toggle('active');
         };
-        
-        // Touch handler for mobile
-        menuBtn.addEventListener('touchend', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          menuBtn.classList.toggle('active');
-          navMenu.classList.toggle('active');
-        });
       }
     })();
   </script>
