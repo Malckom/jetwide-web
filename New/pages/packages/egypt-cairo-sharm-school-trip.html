@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,12 +50,70 @@
         background: #14132A;
       }
       
-      @media (max-width: 768px) {
-        .nav-menu {
-          background: white;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+      
+
+    /* Ensure mobile menu toggle is clickable */
+    .mobile-menu-toggle {
+      position: relative;
+      z-index: 1000 !important;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      pointer-events: auto !important;
+      touch-action: manipulation;
+    }
+
+    .mobile-menu-toggle span {
+      pointer-events: none;
+    }
+
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
+
+      .nav-menu a {
+        color: #14132A !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        padding: 12px 16px !important;
+      }
+
+      .nav-menu a:hover {
+        color: #FE9900 !important;
+        background: #f8f8f8;
+      }
+
+      .dropdown-menu {
+        position: static !important;
+        box-shadow: none !important;
+        padding-left: 20px !important;
+      }
+
+      .dropdown-header {
+        color: #14132A !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+      }
+
+      .dropdown-item {
+        color: #333 !important;
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+      }
+
+      .dropdown-item:hover {
+        color: #FE9900 !important;
+        background: #f8f8f8;
+      }
+
+      .mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+    }
     </style>
 </head>
 <body>
@@ -103,13 +161,13 @@
                 <img src="../../assets/images/logo_small.webp" alt="Jetwide Logo" class="logo" />
                 
                 <!-- Mobile Menu Toggle -->
-                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle mobile menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 
-                <nav class="nav-menu">
+                <nav class="nav-menu" id="navMenu">
                     <a href="../../index.html">Home</a>
                     <a href="../visa-services.html">Visa Services</a>
                     <div class="dropdown">
@@ -645,7 +703,32 @@
         <div class="footer-bottom">
             <p>Powered By Malckom</p>
         </div>
-    </footer>
+    </footer>  <script>
+    // Mobile Menu - Simple and Direct
+    (function() {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const navMenu = document.getElementById('navMenu');
+      
+      if (menuBtn && navMenu) {
+        // Click handler
+        menuBtn.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          menuBtn.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        };
+        
+        // Touch handler for mobile
+        menuBtn.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          menuBtn.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      }
+    })();
+  </script>
+
 
     <script>
         // Mobile Menu and Dropdown functionality

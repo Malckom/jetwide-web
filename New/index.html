@@ -62,10 +62,65 @@
       background: #14132A;
     }
     
+    /* Ensure mobile menu toggle is clickable */
+    .mobile-menu-toggle {
+      position: relative;
+      z-index: 1000 !important;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      pointer-events: auto !important;
+      touch-action: manipulation;
+    }
+    
+    .mobile-menu-toggle span {
+      pointer-events: none;
+    }
+    
     @media (max-width: 768px) {
       .nav-menu {
         background: white;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .nav-menu a {
+        color: #14132A !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        padding: 12px 16px !important;
+      }
+      
+      .nav-menu a:hover {
+        color: #FE9900 !important;
+        background: #f8f8f8;
+      }
+      
+      .dropdown-menu {
+        position: static !important;
+        box-shadow: none !important;
+        padding-left: 20px !important;
+      }
+      
+      .dropdown-header {
+        color: #14132A !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+      }
+      
+      .dropdown-item {
+        color: #333 !important;
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+      }
+      
+      .dropdown-item:hover {
+        color: #FE9900 !important;
+        background: #f8f8f8;
+      }
+      
+      .mobile-menu-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
     }
   </style>
@@ -116,13 +171,13 @@
         <img src="assets/images/logo_small.webp" alt="Jetwide Logo" class="logo" />
         
         <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+        <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle mobile menu">
           <span></span>
           <span></span>
           <span></span>
         </button>
         
-        <nav class="nav-menu">
+        <nav class="nav-menu" id="navMenu">
           <a href="#home">Home</a>
           <div class="dropdown">
             <a href="#tours" class="dropdown-toggle">Tours & Safaris <span class="dropdown-arrow">▼</span></a>
@@ -833,6 +888,38 @@
   </footer>
 
   <script>
+    // Mobile Menu - Simple and Direct
+    (function() {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const navMenu = document.getElementById('navMenu');
+      
+      console.log('Menu button:', menuBtn);
+      console.log('Nav menu:', navMenu);
+      
+      if (menuBtn && navMenu) {
+        // Click handler
+        menuBtn.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Button clicked!');
+          menuBtn.classList.toggle('active');
+          navMenu.classList.toggle('active');
+          console.log('Menu active:', navMenu.classList.contains('active'));
+        };
+        
+        // Touch handler for mobile
+        menuBtn.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Button touched!');
+          menuBtn.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      } else {
+        console.error('Menu button or nav not found!');
+      }
+    })();
+    
     // Mobile Menu and Dropdown functionality
     document.addEventListener('DOMContentLoaded', function() {
       // Mobile menu toggle
@@ -840,10 +927,23 @@
       const navMenu = document.querySelector('.nav-menu');
       
       if (mobileMenuToggle && navMenu) {
-        mobileMenuToggle.addEventListener('click', function() {
+        // Add both click and touch events for better mobile support
+        mobileMenuToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Mobile menu clicked'); // Debug log
           mobileMenuToggle.classList.toggle('active');
           navMenu.classList.toggle('active');
         });
+        
+        // Add touch event for mobile devices
+        mobileMenuToggle.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Mobile menu touched'); // Debug log
+          mobileMenuToggle.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        }, { passive: false });
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
