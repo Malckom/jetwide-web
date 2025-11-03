@@ -7,8 +7,30 @@ class JetwideContentManager {
         // Use absolute path to WordPress API
         this.wpApiUrl = '/wp/wp-json/wp/v2/';
         console.log('🔗 WordPress API URL:', this.wpApiUrl);
+        this.webpSupported = this.isWebPSupported();
         this.init();
         this.initializeInteractiveFeatures();
+    }
+
+    // Feature detection to reuse WebP support check without async penalties
+    isWebPSupported() {
+        if (typeof this.webpSupported === 'boolean') {
+            return this.webpSupported;
+        }
+
+        try {
+            const canvas = document.createElement('canvas');
+            if (canvas.getContext && canvas.getContext('2d')) {
+                const data = canvas.toDataURL('image/webp');
+                this.webpSupported = data.indexOf('data:image/webp') === 0;
+            } else {
+                this.webpSupported = false;
+            }
+        } catch (err) {
+            this.webpSupported = false;
+        }
+
+        return this.webpSupported;
     }
 
     async init() {
@@ -70,11 +92,17 @@ class JetwideContentManager {
         
         if (!slides.length) return;
 
-        // Set background images from data-bg attributes
+        const prefersWebP = this.isWebPSupported();
+
+        // Set background images from data-bg attributes and prefer WebP when supported
         slides.forEach(slide => {
-            const bgImage = slide.getAttribute('data-bg');
-            if (bgImage) {
-                slide.style.backgroundImage = `url(${bgImage})`;
+            const webpImage = slide.getAttribute('data-bg-webp');
+            const fallbackImage = slide.getAttribute('data-bg');
+            const chosenImage = prefersWebP && webpImage ? webpImage : (fallbackImage || webpImage);
+
+            if (chosenImage) {
+                slide.dataset.activeBg = chosenImage;
+                slide.style.backgroundImage = `url(${chosenImage})`;
                 slide.style.backgroundSize = 'cover';
                 slide.style.backgroundPosition = 'center';
                 slide.style.backgroundRepeat = 'no-repeat';
@@ -239,18 +267,21 @@ class JetwideContentManager {
         // Force image loading on mobile devices
         setTimeout(() => {
             slides.forEach((slide, index) => {
-                const bgImage = slide.getAttribute('data-bg');
-                if (bgImage) {
+                const webpImage = slide.getAttribute('data-bg-webp');
+                const fallbackImage = slide.getAttribute('data-bg');
+                const chosenImage = prefersWebP && webpImage ? webpImage : (fallbackImage || webpImage);
+
+                if (chosenImage) {
                     // Pre-load images for better performance
                     const img = new Image();
                     img.onload = () => {
-                        slide.style.backgroundImage = `url(${bgImage})`;
+                        slide.style.backgroundImage = `url(${chosenImage})`;
                         slide.style.backgroundSize = 'cover';
                         slide.style.backgroundPosition = 'center';
                         slide.style.backgroundRepeat = 'no-repeat';
                         slide.style.backgroundAttachment = 'scroll';
                     };
-                    img.src = bgImage;
+                    img.src = chosenImage;
                 }
             });
         }, 200);
