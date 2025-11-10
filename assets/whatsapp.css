@@ -1,0 +1,311 @@
+/**
+ * Jetwide WhatsApp Integration Styles
+ * Consistent WhatsApp CTA styling across all pages
+ * Primary Color: #25d366 (WhatsApp brand green)
+ */
+
+/* ===================================
+   FLOATING WHATSAPP BUTTON
+   =================================== */
+.jetwide-whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  z-index: 9999;
+  transition: all 0.3s ease;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.jetwide-whatsapp-float:hover {
+  background: #20bd5a;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.jetwide-whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.jetwide-whatsapp-text {
+  white-space: nowrap;
+}
+
+/* Pulse animation */
+.jetwide-whatsapp-float.pulse {
+  animation: whatsapp-pulse 1s ease-in-out;
+}
+
+@keyframes whatsapp-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .jetwide-whatsapp-float {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  .jetwide-whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .jetwide-whatsapp-text {
+    display: none;
+  }
+  
+  .jetwide-whatsapp-float {
+    width: 56px;
+    height: 56px;
+    padding: 12px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+}
+
+/* ===================================
+   PAGE-SPECIFIC WHATSAPP CTAs
+   =================================== */
+.jetwide-wa-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.jetwide-wa-cta:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+.jetwide-wa-cta svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* Visa-specific styling */
+.jetwide-wa-visa {
+  background: #1DA851;
+}
+
+.jetwide-wa-visa:hover {
+  background: #189945;
+}
+
+/* ===================================
+   PACKAGE CARD WHATSAPP BUTTONS
+   =================================== */
+.jetwide-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #25d366;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;
+}
+
+.jetwide-wa-btn:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+.jetwide-wa-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Safari package button styling */
+.jetwide-wa-safari {
+  margin-top: 15px;
+}
+
+/* ===================================
+   RESPONSIVE ADJUSTMENTS
+   =================================== */
+@media (max-width: 768px) {
+  .jetwide-wa-cta {
+    padding: 12px 20px;
+    font-size: 15px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .jetwide-wa-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    max-width: 100%;
+  }
+  
+  .jetwide-wa-cta svg,
+  .jetwide-wa-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ===================================
+   HERO SECTION INTEGRATION
+   =================================== */
+.hero-buttons .jetwide-wa-cta {
+  margin-left: 15px;
+}
+
+.hero-content .jetwide-wa-cta {
+  margin-top: 25px;
+}
+
+@media (max-width: 768px) {
+  .hero-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .hero-buttons .jetwide-wa-cta {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* ===================================
+   CARD INTEGRATION
+   =================================== */
+.destination-card .jetwide-wa-btn,
+.special-card .jetwide-wa-btn,
+.themed-card .jetwide-wa-btn,
+.package-card .jetwide-wa-btn,
+.international-card .jetwide-wa-btn {
+  margin-top: auto;
+}
+
+.destination-info .jetwide-wa-btn,
+.special-content .jetwide-wa-btn,
+.themed-card-content .jetwide-wa-btn,
+.package-content .jetwide-wa-btn,
+.international-card-overlay .jetwide-wa-btn {
+  margin-top: 15px;
+}
+
+/* ===================================
+   CAR HIRE CARDS
+   =================================== */
+.car-card {
+  position: relative;
+}
+
+.car-card .jetwide-wa-btn {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.car-card:hover .jetwide-wa-btn {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .car-card .jetwide-wa-btn {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-top: 10px;
+  }
+}
+
+/* ===================================
+   ACCESSIBILITY
+   =================================== */
+.jetwide-wa-cta:focus,
+.jetwide-wa-btn:focus,
+.jetwide-whatsapp-float:focus {
+  outline: 3px solid #25d366;
+  outline-offset: 3px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jetwide-wa-cta,
+  .jetwide-wa-btn,
+  .jetwide-whatsapp-float {
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jetwide-wa-cta,
+  .jetwide-wa-btn,
+  .jetwide-whatsapp-float {
+    transition: none;
+  }
+  
+  .jetwide-whatsapp-float.pulse {
+    animation: none;
+  }
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .jetwide-whatsapp-float,
+  .jetwide-wa-cta,
+  .jetwide-wa-btn {
+    display: none;
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test WhatsApp Button</title>
+  <link rel="stylesheet" href="assets/whatsapp.css?v=2">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+    .test-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .instructions {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .status {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-content">
+    <h1>🧪 WhatsApp Button Test Page</h1>
+    
+    <div class="instructions">
+      <h2>Test Instructions:</h2>
+      <ol>
+        <li>Look for a green floating WhatsApp button in the <strong>bottom-right corner</strong></li>
+        <li>The button should have a WhatsApp icon and text "Instant WhatsApp Chat"</li>
+        <li>It should pulse once when the page loads</li>
+        <li>Hover over it to see the hover effect</li>
+        <li>Click it to open WhatsApp</li>
+      </ol>
+    </div>
+    
+    <div class="status" id="status">
+      <div>⏳ Loading WhatsApp integration...</div>
+    </div>
+    
+    <h2>Scroll Test</h2>
+    <p>Scroll down to verify the button stays fixed in the bottom-right corner...</p>
+    <div style="height: 1500px; background: linear-gradient(to bottom, #fff, #e0e0e0);"></div>
+    <p><strong>Bottom of page reached!</strong> The button should still be visible in the bottom-right.</p>
+  </div>
+
+  <script src="assets/whatsapp.js?v=2"></script>
+  <script>
+    // Check if button was created
+    setTimeout(() => {
+      const button = document.getElementById('jetwide-whatsapp-float');
+      const statusDiv = document.getElementById('status');
+      
+      if (button) {
+        statusDiv.innerHTML = `
+          <div style="color: green;">✅ WhatsApp button found!</div>
+          <div>Button ID: ${button.id}</div>
+          <div>Button classes: ${button.className}</div>
+          <div>Position: ${getComputedStyle(button).position}</div>
+          <div>Z-index: ${getComputedStyle(button).zIndex}</div>
+          <div>Bottom: ${getComputedStyle(button).bottom}</div>
+          <div>Right: ${getComputedStyle(button).right}</div>
+          <div>Display: ${getComputedStyle(button).display}</div>
+          <div>Visibility: ${getComputedStyle(button).visibility}</div>
+        `;
+      } else {
+        statusDiv.innerHTML = `
+          <div style="color: red;">❌ WhatsApp button NOT found!</div>
+          <div>Check browser console for errors (F12)</div>
+        `;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
